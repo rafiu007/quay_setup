@@ -7,7 +7,7 @@
 
 3. Create the redhat-pull secret using the below command.Replace config1.json with your own json.
 
-```oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'```
+> ```oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'```
 
 4. Install the Quay operator from operators hub
 
@@ -15,7 +15,7 @@
 ```oc apply -f quayecosystem.yaml```
 
 6. Create the config for cliarv4 using the below command.
-```oc create  secret generic con-clair --from-file=./config.yaml```
+> ```oc create  secret generic con-clair --from-file=./config.yaml```
 
 7. run jager
 ```oc apply -f jager.yaml```
