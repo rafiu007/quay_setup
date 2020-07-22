@@ -9,7 +9,7 @@ spec:
     deploymentStrategy: Recreate
     externalAccess:
       tls:
-        termination: none
+        termination: edge
     skipSetup: false
     keepConfigDeployment: true
   clair:
