@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clair
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: clair
+  template:
+    metadata:
+      labels:
+        run: clair
+    spec:
+      containers:
+        - name: clair
+          image: rafiu007/clair:1
+          env:
+            - name: conf
+              valueFrom:
+                configMapKeyRef:
+                    name: config1
+                    key: config.yaml
+          volumeMounts:
+          - name: config
+            mountPath: "/config"
+            readOnly: true
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: config
+          configMap:
+            name: config1

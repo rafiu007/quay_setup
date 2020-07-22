@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clairv4-postgres
+  labels:
+    quay-component: clairv4-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      quay-component: clairv4-postgres
+  template:
+    metadata:
+      labels:
+        quay-component: clairv4-postgres
+    spec:
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: clairv4-postgres
+      containers:
+        - name: postgres
+          image: postgres:9.6
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "clair"
+            - name: POSTGRES_DB
+              value: "clair"
+            - name: POSTGRES_PASSWORD
+              value: "abc"
+            - name: PGDATA
+              value: "/var/lib/postgres/data/mypgdata"
+          volumeMounts:
+            - name: postgres-data
+              mountPath: "/var/lib/postgres/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: clairv4-postgres
+  labels:
+    quay-component: clairv4-postgres
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "5Gi"
+    volumeName: "clairv4-postgres"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clairv4-postgres
+  labels:
+    quay-component: clairv4-postgres
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      protocol: TCP
+      name: postgres
+      targetPort: 5432
+  selector:
+    quay-component: clairv4-postgres

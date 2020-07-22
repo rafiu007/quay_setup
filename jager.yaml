@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger
+  labels:
+    run: jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: jaeger
+  template:
+    metadata:
+      labels:
+        run: jaeger
+    spec:
+      containers:
+        - name: jaeger
+          image: jaegertracing/all-in-one:1.17
+          ports:
+            - containerPort: 53
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+  labels:
+    run: jaeger
+spec:
+  type: ClusterIP
+  ports:
+    - port: 53
+      protocol: TCP
+      name: jaeger
+      targetPort: 53
+  selector:
+    run: jaeger

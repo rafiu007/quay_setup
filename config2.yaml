@@ -1,0 +1,26 @@
+---
+    log_level: debug-color
+    introspection_addr: ":8089"
+    http_listen_addr: ":8080"
+    indexer:
+      connstring: host=quayecosystem-quay-postgresql port=5432 user=quay dbname=quay password=quay sslmode=disable
+      scanlock_retry: 10
+      layer_scan_concurrency: 5
+      migrations: true
+    matcher:
+      indexer_addr: http://clair-indexer:8080/
+      connstring: host=quayecosystem-quay-postgresql port=5432 user=quay dbname=quay password=quay sslmode=disable
+      max_conn_pool: 100
+      migrations: true
+    # tracing and metrics config
+    trace:
+      name: "jaeger"
+      probability: 1
+      jaeger:
+        agent_endpoint: "jaeger:6831"
+        service_name: "clair"
+    metrics:
+      name: "prometheus"
+    
+    
+    
