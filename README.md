@@ -7,8 +7,7 @@
 
 3. Create the redhat-pull secret using the below command
 
-``` oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'
-```
+```oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'```
 
 4)Install the Quay operator from operators hub
 
