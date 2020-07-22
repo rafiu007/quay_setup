@@ -5,7 +5,7 @@
 
 2. move into the cluster using oc project <name>
 
-3. Create the redhat-pull secret using the below command
+3. Create the redhat-pull secret using the below command.Replace config1.json with your own json.
 
 ```oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'```
 
@@ -26,7 +26,7 @@
 9. run clair v4
 ```oc apply -f clairv4.yaml```
 
-10. use oc get routes to get the endpoints for quay and qauay-config.
+10. use ```oc get routes``` to get the endpoints for quay and qauay-config.
 
 11. download config.tar.gz from quay-config ui.
 
