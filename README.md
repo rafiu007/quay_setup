@@ -12,7 +12,7 @@
 4. Install the Quay operator from operators hub
 
 5. use the below command to deploy quay with clair v2 scanning in non tls mode.
-```oc apply -f automated_cr.yaml```
+```oc apply -f quayecosystem.yaml```
 
 6. Create the config for cliarv4 using the below command.
 ```oc create  secret generic con-clair --from-file=./config.yaml```
