@@ -1,19 +1,20 @@
 **Follow the below steps to set up quay with clairv4(modified claircore with crda) scanning**
 
 
-1)Create a project on your cluster
+1. Create a project on your cluster
 
-2)move into the cluster using oc project <name>
+2. move into the cluster using oc project <name>
 
-3)Create the redhat-pull secret using the below command
+3. Create the redhat-pull secret using the below command
 
-oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'
+``` oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'
+```
 
 4)Install the Quay operator from operators hub
 
 5) use the below command to deploy quay with clair v2 scanning in non tls mode.
 oc apply -f automated_cr.yaml
-#####################################################################
+
 6)Create the config for cliarv4 using the below command.
 oc create  secret generic con-clair --from-file=./config.yaml
 
