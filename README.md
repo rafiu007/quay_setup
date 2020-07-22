@@ -50,37 +50,3 @@ vi registries.conf
 
 18) create pull secret for cso.
 oc create secret generic pull-secret --from-file=".dockerconfigjson=pullsec.json" --type='kubernetes.io/dockerconfigjson'
-
-
-
-
-
-
-
-
-
-
-
-
-#########################
-configmap for clair
-
-kubectl create configmap config1 --from-file=./clair_config/config.yaml --namespace=postgresql-operator
-
-
-
-#########################
-congig for quay
-oc create -n  secret generic quay-config-secret --from-file=./config.yaml
-
-
-###############################################################
-yaml custom
-SECURITY_SCANNER_V4_ENDPOINT: http://clairv4
-SECURITY_SCANNER_V4_NAMESPACE_WHITELIST:
-  - "clairv4"
-
-  quay.io/rafiu007/clair:v4withcrda
-
-
-  oc create secret generic pull-secret --from-file=".dockerconfigjson=pullsec.json" --type='kubernetes.io/dockerconfigjson'
