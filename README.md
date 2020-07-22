@@ -1,3 +1,6 @@
+**Follow the below steps to set up quay with clairv4(modified claircore with crda) scanning**
+
+
 1)Create a project on your cluster
 
 2)move into the cluster using oc project <name>
