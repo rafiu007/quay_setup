@@ -35,6 +35,7 @@ SECURITY_SCANNER_V4_NAMESPACE_WHITELIST:
 
 
 13)create another tar.gz from the new config and upload this through quay-config ui.
+tar -czvf quaypj.tar.gz extra_ca_certs config.yaml
 
 14) wait for pod to restart
 
@@ -46,6 +47,9 @@ vi registries.conf
 16) add the route for quay in the insecure registries and save the file.
 
 17 Push and pull with podman.
+
+18) create pull secret for cso.
+oc create secret generic pull-secret --from-file=".dockerconfigjson=pullsec.json" --type='kubernetes.io/dockerconfigjson'
 
 
 
@@ -75,3 +79,8 @@ yaml custom
 SECURITY_SCANNER_V4_ENDPOINT: http://clairv4
 SECURITY_SCANNER_V4_NAMESPACE_WHITELIST:
   - "clairv4"
+
+  quay.io/rafiu007/clair:v4withcrda
+
+
+  oc create secret generic pull-secret --from-file=".dockerconfigjson=pullsec.json" --type='kubernetes.io/dockerconfigjson'
