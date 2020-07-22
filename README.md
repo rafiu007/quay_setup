@@ -32,9 +32,9 @@
 
 12. unpack it and add the below lines to config.yaml.
 
-```SECURITY_SCANNER_V4_ENDPOINT: http://clairv4```
-```SECURITY_SCANNER_V4_NAMESPACE_WHITELIST:```
-```  - "clairv4"```
+* ```SECURITY_SCANNER_V4_ENDPOINT: http://clairv4```
+* ```SECURITY_SCANNER_V4_NAMESPACE_WHITELIST:```
+* ```  - "clairv4"```
 
 
 13. create another tar.gz from the new config and upload this through quay-config ui.
