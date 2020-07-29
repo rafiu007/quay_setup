@@ -7,11 +7,19 @@ spec:
     image: quay.io/rafiu007/clair:quaypj
     imagePullSecretName: redhat-pull-secret
     deploymentStrategy: Recreate
+    enableRepoMirroring: true
     externalAccess:
       tls:
         termination: edge
     skipSetup: false
     keepConfigDeployment: true
+    # registryBackends:
+    #   - name: s3
+    #     s3:
+    #       accessKey: minio
+    #       secretkey: minio123
+    #       host: minio-service
+
   clair:
     enabled: true
     imagePullSecretName: redhat-pull-secret
