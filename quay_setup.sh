@@ -8,7 +8,7 @@ oc apply -f cso.yaml
 # add pull secrete for quay images
 oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=docker_quay.json" --type='kubernetes.io/dockerconfigjson'
 #CSO takes a lot of time to come up so need to wait before bringing up quayecosystem
-sleep 5m
+sleep 2m
 # create quay instance
 oc apply -f quayecosystem.yaml
 # enable clair v4 scanning for clairv4 org
