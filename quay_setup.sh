@@ -7,10 +7,10 @@ oc apply -f quay-op.yaml
 oc apply -f cso.yaml
 # add pull secrete for quay images
 oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=docker_quay.json" --type='kubernetes.io/dockerconfigjson'
-#CSO takes a lot of time to come up so need to wait before bringing up quayecosystem
+#Quay-operator takes some time to come(especially on crc) up so need to wait before bringing up quayecosystem
 #sleep 5m
 
-#code to wait for CSO to come up
+#code to wait for quay-operator to come up
 oc get QuayEcosystem
 while true; do
   oc get QuayEcosystem
