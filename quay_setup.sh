@@ -11,10 +11,13 @@ oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=docke
 #sleep 5m
 
 #code to wait for quay-operator to come up
-oc get QuayEcosystem
+req="No resources found in quay-enterprise namespace."
 while true; do
-  oc get QuayEcosystem
-  if [ "$?" == "0" ]; then
+  echo "Waiting for QuayEcosystem...."
+  VAR1=$(oc get QuayEcosystem 2>&1)
+  if [[ $VAR1 == $req ]]
+  then
+    echo "QuayEcosystem found"
     oc apply -f quayecosystem.yaml
     break
   fi
