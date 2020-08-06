@@ -25,7 +25,17 @@ while true; do
 done
 # create quay instance
 #oc apply -f quayecosystem.yaml
-
+#Wait for secret to get populated
+while true; do
+  echo "Looking for quay-enterprise-config-secret...."
+  VAL2=$(oc get secrets quay-enterprise-config-secret -o json | jq -r '.data["config.yaml"]' 2>&1)
+  if [[ $VAL2 != "null" ]]
+  then
+    echo "Secret found."
+    break
+  fi
+  sleep 1
+done
 # enable clair v4 scanning for clairv4 org
 # this has to be done after creation of quay-enterprise-config-secret
 oc patch secret quay-enterprise-config-secret -p "$(oc get secrets quay-enterprise-config-secret -o json | jq -r '.data["config.yaml"] | @base64d | . + "SECURITY_SCANNER_V4_ENDPOINT: http://clairv4\nSECURITY_SCANNER_V4_NAMESPACE_WHITELIST:\n- clairv4\n\n"| @base64 | {"data":{"config.yaml": .}}')"
