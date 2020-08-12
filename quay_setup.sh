@@ -36,7 +36,7 @@ check(){
 }
 
 #Create a Project
-#oc new-project quay-enterprise
+oc new-project quay-enterprise
 # install quay operator
 oc apply -f quay-op.yaml
 # install cso operator
@@ -46,7 +46,7 @@ oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=docke
 #Quay-operator takes some time to come(especially on crc) up so need to wait before bringing up quayecosystem
 
 #code to wait for quay-operator to come up
-req="No resources found in qq namespace."
+req="No resources found in quay-enterprise namespace."
 com="oc get QuayEcosystem"
 check "\${com}" "\${req}"
 
