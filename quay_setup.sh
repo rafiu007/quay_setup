@@ -25,7 +25,7 @@ check(){
       fi
     else
       VAR3=$($VAR1 2>&1)
-      echo "Checking for QuayEcosystem................"
+      echo "Checking for QuayEcosystem................................."
       if [[ $VAR3 == $VAR2 ]]
       then
         break
