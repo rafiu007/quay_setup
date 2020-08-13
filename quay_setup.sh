@@ -4,23 +4,13 @@ check(){
   eval VAR1="$1"
   eval VAR2="$2"
   while true; do
-    if [[ $3 == "1" ]]
+    if [[ $2 == "1" ]]
     then
       echo "Waiting for  secret......................................"
-      $VAR1
-      if [[ $? == $VAR2 ]]
+      eval $VAR1
+      if [[ $? == "0" ]]
       then
         echo "Secret found..........................................."
-        break
-      fi
-    elif [[ $3 == "2" ]]
-    then
-      VAR3=$(eval $VAR1 2>&1)
-      echo "Waiting for  secret to get populated......................"
-      #echo $VAR3
-      if [[ $VAR3 != $VAR2 ]]
-      then
-        echo "Secret is populated....................................."
         break
       fi
     else
@@ -62,14 +52,13 @@ oc apply -f clairv4.yaml
 
 
 #Check if secret is created
-req="0"
+
 com="oc get secrets quay-enterprise-config-secret"
-check "\${com}" "\${req}" "1"
+check "\${com}" "1"
 
 #Wait for secret to get populated
-req="null"
-com="oc get secrets quay-enterprise-config-secret -o json | jq -r '.data[\"config.yaml\"]'"
-check "\${com}" "\${req}" "2"
+com="oc get secrets quay-enterprise-config-secret -o json | jq -r '.data[\"config.yaml\"]' | grep -v null"
+check "\${com}" "1"
 
 # enable clair v4 scanning for clairv4 org
 # this has to be done after creation of quay-enterprise-config-secret
