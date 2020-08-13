@@ -1,11 +1,9 @@
 # oc create -f https://raw.githubusercontent.com/minio/minio-operator/master/minio-operator.yaml
 
-check(){
-  eval VAR1="$1"
-  eval VAR2="$2"
+exec_and_wait(){
   while true; do
-    eval $VAR1
-    if [[ $? == $VAR2 ]]
+    eval $1
+    if [[ $? == 0 ]]
     then
       break
     fi
