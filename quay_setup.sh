@@ -39,9 +39,7 @@ oc apply -f clairv4.yaml
 exec_and_wait "oc get secrets quay-enterprise-config-secret"
 
 #Wait for secret to get populated
-req="0"
-com="oc get secrets quay-enterprise-config-secret -o json | jq -r '.data[\"config.yaml\"]' | grep -v null"
-check "\${com}" "\${req}"
+exec_and_wait "oc get secrets quay-enterprise-config-secret -o json | jq -r '.data[\"config.yaml\"]' | grep -v null"
 
 # enable clair v4 scanning for clairv4 org
 # this has to be done after creation of quay-enterprise-config-secret
