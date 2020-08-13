@@ -36,9 +36,7 @@ oc apply -f clairv4.yaml
 
 
 #Check if secret is created
-req='0'
-com="oc get secrets quay-enterprise-config-secret"
-check "\${com}" "\${req}"
+exec_and_wait "oc get secrets quay-enterprise-config-secret"
 
 #Wait for secret to get populated
 req="0"
