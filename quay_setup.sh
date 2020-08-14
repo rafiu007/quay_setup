@@ -1,11 +1,9 @@
 # oc create -f https://raw.githubusercontent.com/minio/minio-operator/master/minio-operator.yaml
 
-check(){
-  eval VAR1="$1"
-  eval VAR2="$2"
+exec_and_wait(){
   while true; do
-    eval $VAR1
-    if [[ $? == $VAR2 ]]
+    eval $1
+    if [[ $? == 0 ]]
     then
       break
     fi
@@ -22,9 +20,7 @@ oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=docke
 #Quay-operator takes some time to come(especially on crc) up so need to wait before bringing up quayecosystem
 
 #code to wait for quay-operator to come up
-req="1"
-com="oc get pods -o json | jq -r '.items[0].status.phase' | grep -v Running"
-check "\${com}" "\${req}"
+exec_and_wait "oc get pods -o json | jq -r '.items[0].status.phase' | grep Running".
 
 # create quay instance
 oc apply -f quayecosystem.yaml
@@ -38,14 +34,10 @@ oc apply -f clairv4.yaml
 
 
 #Check if secret is created
-req='0'
-com="oc get secrets quay-enterprise-config-secret"
-check "\${com}" "\${req}"
+exec_and_wait "oc get secrets quay-enterprise-config-secret"
 
 #Wait for secret to get populated
-req="0"
-com="oc get secrets quay-enterprise-config-secret -o json | jq -r '.data[\"config.yaml\"]' | grep -v null"
-check "\${com}" "\${req}"
+exec_and_wait "oc get secrets quay-enterprise-config-secret -o json | jq -r '.data[\"config.yaml\"]' | grep -v null"
 
 # enable clair v4 scanning for clairv4 org
 # this has to be done after creation of quay-enterprise-config-secret
@@ -53,4 +45,3 @@ oc patch secret quay-enterprise-config-secret -p "$(oc get secrets quay-enterpri
 
 # install cso operator
 oc apply -f cso.yaml
-
