@@ -20,7 +20,6 @@ oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=docke
 #Quay-operator takes some time to come(especially on crc) up so need to wait before bringing up quayecosystem
 
 #code to wait for quay-operator to come up
-command=
 exec_and_wait "oc get pods -o json | jq -r '.items[0].status.phase' | grep Running"
 
 # create quay instance
