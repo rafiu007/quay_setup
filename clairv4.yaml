@@ -15,8 +15,8 @@ spec:
         quay-component: clair-combo
     spec:
       containers:
-        - image: quay.io/rafiu007/clair:v4withcrda
-          imagePullPolicy: IfNotPresent
+        - image: docker.io/ararunprasad/clair:latest
+          imagePullPolicy: Always
           name: clair-combo
           env:
             - name: CLAIR_CONF
