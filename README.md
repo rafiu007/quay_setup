@@ -1,55 +1,40 @@
-**Follow the below steps to set up quay with clairv4(modified claircore with crda) scanning**
+## Deployment of Quay, Clairv4 with CRDA on Openshift 4.x
 
+### 1. Create Openshift cluster > 4.5
+#### 1.1. Cleanup DNS Recordsets on AWS Ephimeral cluster
+Use ..
 
-1. Create a project on your cluster
+### 2. Use Let's Encrypt certificates on Ingress controller
+#### 2.1. Get certificate pair (One time process)
+Follow https://github.com/redhat-cop/openshift-4-alpha-enablement/blob/2d128d28496378e609c00da5312a3a3500fa1702/Lets_Encrypt_Certificates_for_OCP4.adoc
+#### 2.2. Use certificate pair on Ingress
+```sh
+# Let's encrypt related setups
+export CERTDIR=$PWD/certificates
+oc create secret tls router-certs --cert=${CERTDIR}/fullchain.pem --key=${CERTDIR}/key.pem -n openshift-ingress
+oc patch ingresscontroller default -n openshift-ingress-operator --type=merge --patch='{"spec": { "defaultCertificate": { "name": "router-certs" }}}'
+```
+#### 2.3. Enable Enterprise Operators on OKD (Not required for OCP)
+```yaml
+# To enable enterprise operators on OKD
+(
+cat <<EOF
+apiVersion: config.openshift.io/v1
+kind: OperatorHub
+metadata:
+  name: cluster
+spec:
+  disableAllDefaultSources: true
+  sources:
+  - disabled: false
+    name: redhat-operators
+  - disabled: false
+    name: community-operators
+EOF
+ ) | oc apply -f -
+```
 
-2. move into the cluster using oc project <name>
-
-3. Create the redhat-pull secret using the below command.Replace config1.json with your own json.
-
-> ```oc create secret generic redhat-pull-secret --from-file=".dockerconfigjson=config1.json" --type='kubernetes.io/dockerconfigjson'```
-
-4. Install the Quay operator from operators hub
-
-5. use the below command to deploy quay with clair v2 scanning in non tls mode.
-> ```oc apply -f quayecosystem.yaml```
-
-6. Create the config for cliarv4 using the below command.
-> ```oc create  secret generic con-clair --from-file=./config.yaml```
-
-7. run jager
-> ```oc apply -f jager.yaml```
-
-8. run postgres-db for clair v4
-> ```oc apply -f clairv4_db.yaml```
-
-9. run clair v4
-> ```oc apply -f clairv4.yaml```
-
-10. use ```oc get routes``` to get the endpoints for quay and qauay-config.
-
-11. download config.tar.gz from quay-config ui.
-
-12. unpack it and add the below lines to config.yaml.
-
-* ```SECURITY_SCANNER_V4_ENDPOINT: http://clairv4```
-* ```SECURITY_SCANNER_V4_NAMESPACE_WHITELIST:```
-* ```  - "clairv4"```
-
-
-13. create another tar.gz from the new config and upload this through quay-config ui.
-> ```tar -czvf quaypj.tar.gz extra_ca_certs config.yaml```
-
-14. Wait for pod to restart
-
-
-15. Configure podman to interact with non tls quay.Use the below commands
-> ```cd /etc/containers```
-> ```vi registries.conf```
-
-16. Add the route for quay in the insecure registries and save the file.
-
-17. Push and pull with podman.
-
-18. create pull secret for cso.(optional)
-> ```oc create secret generic pull-secret --from-file=".dockerconfigjson=pullsec.json" --type='kubernetes.io/dockerconfigjson'```
+### 3. Deploy Quay, CSO
+```sh
+bash quay_setup.sh
+```
