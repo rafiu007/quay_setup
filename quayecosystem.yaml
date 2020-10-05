@@ -4,7 +4,7 @@ metadata:
   name: quayecosystem
 spec:
   quay:
-    image: quay.io/rafiu007/clair:quaypj
+    image: docker.io/ararunprasad/quay:latest
     imagePullSecretName: redhat-pull-secret
     deploymentStrategy: Recreate
     enableRepoMirroring: true

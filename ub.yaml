@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: appvuln
-        image: quayecosystem-quay-quay-enterprise.apps.arajkuma-osa.devcluster.openshift.com/clairv4/pyvuln:latest
+        image: quayecosystem-quay-quay-enterprise.apps.arajkuma-osa.devcluster.openshift.com/clairv4/flask:latest
         command: ["sleep", "123456"]
       nodeSelector:
         beta.kubernetes.io/os: linux
