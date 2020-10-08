@@ -29,6 +29,15 @@ bash post-install.sh
 bash quay_setup.sh
 ```
 
+### 4. Login to quay and create an organisation and push image.
+Use `oc get routes` and use the route to access quay.The default username is `quay` and password is `password` .
+Create an organisation named `clairv4` .
+Create a repo. 
+Tag an image according to the route,orgname,repo and tag.
+For example `quay-xyz-abc.io/clairv4/flask:image1` .
+Push the image.
+
+
 ### All in one
 Note: It is assumed that `install-config` has been created and stored in $PWD using `$INSTALLER_DIR/openshift-install --dir=. create install-config`.
 
