@@ -34,9 +34,17 @@ Use `oc get routes` and use the route to access quay.The default username is `qu
 Create an organisation named `clairv4` .
 Create a repo. 
 Tag an image according to the route,orgname,repo and tag.
-For example `quay-xyz-abc.io/clairv4/flask:image1` .
-Push the image.
+For example
+`docker pull http://quay.io/rafiu007/clair:pyvuln` 
+`docker tag quay.io/rafiu007/clair:pyvuln quay-xyz-abc.io/clairv4/flask:image1` .
+Push the image. 
+`docker push quay-xyz-abc.io/clairv4/flask:image1` .
 
+Note:
+Here route is `quay-xyz-abc.io`
+org name is `clairv4`
+repo is `flask`
+tag is `image1`
 
 ### All in one
 Note: It is assumed that `install-config` has been created and stored in $PWD using `$INSTALLER_DIR/openshift-install --dir=. create install-config`.
