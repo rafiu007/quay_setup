@@ -33,7 +33,7 @@ bash quay_setup.sh
 Use `oc get routes` and use the route to access quay.The default username is `quay` and password is `password` .
 Create an organisation named `clairv4` .
 Create a repo. 
-Tag an image according to the route,orgname,repo and tag.
+Tag an image according to the route,org name,repo and tag.
 For example
 `docker pull quay.io/rafiu007/clair:pyvuln` 
 `docker tag quay.io/rafiu007/clair:pyvuln quay-xyz-abc.io/clairv4/flask:image1` .
@@ -45,6 +45,8 @@ Here route is `quay-xyz-abc.io`
 org name is `clairv4`
 repo is `flask`
 tag is `image1`
+
+Use `quay-xyz-abc.io/clairv4/flask:image1` as image in your workload.
 
 ### All in one
 Note: It is assumed that `install-config` has been created and stored in $PWD using `$INSTALLER_DIR/openshift-install --dir=. create install-config`.
