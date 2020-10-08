@@ -35,7 +35,7 @@ Create an organisation named `clairv4` .
 Create a repo. 
 Tag an image according to the route,orgname,repo and tag.
 For example
-`docker pull http://quay.io/rafiu007/clair:pyvuln` 
+`docker pull quay.io/rafiu007/clair:pyvuln` 
 `docker tag quay.io/rafiu007/clair:pyvuln quay-xyz-abc.io/clairv4/flask:image1` .
 Push the image. 
 `docker push quay-xyz-abc.io/clairv4/flask:image1` .
